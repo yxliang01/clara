@@ -9,16 +9,16 @@ RUN yum install -y python-devel python-pip gcc make Cython lpsolve-devel git
 
 # Install clara
 WORKDIR /root/
-RUN git clone "https://github.com/iradicek/clara"
+COPY . /root/clara
 WORKDIR /root/clara
 RUN make install
 
 # Add new user
-RUN useradd clara
+RUN useradd -m clara
 
 # Copy examples
 RUN mkdir /home/clara/examples
-ADD examples/* /home/clara/examples/
+COPY examples/* /home/clara/examples/
 RUN chown -R clara:clara /home/clara/examples
 
 # Change user & working directory
